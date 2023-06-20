@@ -2,6 +2,7 @@ import React,{useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Container, Paper, Button } from '@mui/material';
+import { AlignHorizontalRight } from '@mui/icons-material';
 
 export default function Book() {
     const paperStyle={padding:'50px 20px',  width:600, margin:"20px"};
@@ -23,6 +24,10 @@ export default function Book() {
         }).then(()=>{
             console.log("New book added")
         })
+    }
+
+    const handleDelete=(book)=>{
+      console.log("deleting book")
     }
 
     useEffect(()=>{
@@ -71,6 +76,7 @@ export default function Book() {
             name:{book.name}<br/>
             author:{book.author}<br/>
             publicationDate:{book.publicationDate}<br/>
+            <Button variant='contained' onClick={handleDelete} style={AlignHorizontalRight}>delete</Button>
             </Paper>
       ))}
     </Paper>
