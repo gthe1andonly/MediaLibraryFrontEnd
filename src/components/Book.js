@@ -2,7 +2,6 @@ import React,{useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Container, Paper, Button } from '@mui/material';
-import { AlignHorizontalRight } from '@mui/icons-material';
 
 export default function Book() {
     const paperStyle={padding:'50px 20px',  width:600, margin:"20px"};
@@ -26,8 +25,17 @@ export default function Book() {
         })
     }
 
-    const handleDelete=(book)=>{
+    const handleDelete=(id)=>{
       console.log("deleting book")
+      fetch(`http://localhost:8080/api/v1/mediaCenter/deletebook?id=${id}`,
+      {
+        method:"DELETE",
+        headers:{"Content-Type":"application/json"},
+      }).then(()=>{
+        console.log("book deleted")
+      })
+
+
     }
 
     useEffect(()=>{
@@ -76,7 +84,7 @@ export default function Book() {
             name:{book.name}<br/>
             author:{book.author}<br/>
             publicationDate:{book.publicationDate}<br/>
-            <Button variant='contained' onClick={handleDelete} style={AlignHorizontalRight}>delete</Button>
+            <Button variant='contained' onClick={handleDelete} style={{alignSelf:"right"}}>delete</Button>
             </Paper>
       ))}
     </Paper>
