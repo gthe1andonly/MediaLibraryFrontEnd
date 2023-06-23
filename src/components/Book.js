@@ -25,9 +25,9 @@ export default function Book() {
         })
     }
 
-    const handleDelete=(id)=>{
+    const handleDelete = bookId =>{
       console.log("deleting book")
-      fetch(`http://localhost:8080/api/v1/mediaCenter/deletebook?id=${id}`,
+      fetch(`http://localhost:8080/api/v1/mediaCenter/deletebook?id=${bookId}`,
       {
         method:"DELETE",
         headers:{"Content-Type":"application/json"},
@@ -84,7 +84,7 @@ export default function Book() {
             name:{book.name}<br/>
             author:{book.author}<br/>
             publicationDate:{book.publicationDate}<br/>
-            <Button variant='contained' onClick={handleDelete} style={{alignSelf:"right"}}>delete</Button>
+            <Button variant='contained' onClick={() => {handleDelete(book.id)}} style={{alignSelf:"right"}}>delete</Button>
             </Paper>
       ))}
     </Paper>
