@@ -5,6 +5,9 @@ import { Container, Paper, Button } from '@mui/material';
 
 export default function Book() {
     const paperStyle={padding:'50px 20px',  width:600, margin:"20px"};
+    // The usestate hook lets us create state variables for the component. 
+    // In this instance, we're creating properties like name, author and genre that will dynamically change.
+    // These are initialized with an empty string 
     const[name,setName]=useState('');
     const[author,setAuthor]=useState('');
     const[genre,setGenre]=useState('');
@@ -15,7 +18,7 @@ export default function Book() {
         e.preventDefault()
         const book={name,author,genre,publicationDate}
         console.log(book)
-        fetch("http://localhost:8080/api/v1/mediaCenter/addnewbook",
+        fetch("http://localhost:8080/addnewbook",
         {
             method:"POST",
             headers:{"Content-Type":"application/json"},
@@ -27,7 +30,7 @@ export default function Book() {
 
     const handleDelete = bookId =>{
       console.log("deleting book")
-      fetch(`http://localhost:8080/api/v1/mediaCenter/deletebook?id=${bookId}`,
+      fetch(`http://localhost:8080/deletebook?id=${bookId}`,
       {
         method:"DELETE",
         headers:{"Content-Type":"application/json"},
@@ -39,7 +42,7 @@ export default function Book() {
     }
 
     useEffect(()=>{
-    fetch("http://localhost:8080/api/v1/mediaCenter/getbooks")
+    fetch("http://localhost:8080/getbooks")
     .then(res=>res.json())
     .then((result)=>{
         setBooks(result);
