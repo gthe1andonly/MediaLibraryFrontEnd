@@ -1,4 +1,6 @@
-
+import { useState } from "react";
+import Box  from "@mui/material/Box";
+import { Button, Container, Paper, TextField } from "@mui/material";
 
 export default function Login(){
     const paperStyle={padding:'50px 20px',  width:600, margin:"20px"};
@@ -6,9 +8,9 @@ export default function Login(){
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleRegister = (e) => {
+    const handleLogin = (e) => {
         const userInfo = {username, password}
-            fetch("http://localhost:8080/login/save", 
+            fetch("http://localhost:8080/login", 
             {
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
