@@ -1,6 +1,10 @@
 import Box from '@mui/material/Box';
 import { Button, Container, Paper, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'react-router-dom';
+import {useSelector, useDispatch} from 'react-redux';
+import { register } from '../actions/userActions';
+
 
 export default function Register() {
     const paperStyle={padding:'50px 20px',  width:600, margin:"20px"};
@@ -9,27 +13,30 @@ export default function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
+    const userRegister = useSelector(state => state.userRegister);
+    const {loading, userInfo, error} = userRegister;
+    const dispatch = useDispatch();
 
     // For now I will check the password similarity in the handle register function.
     // There's likely a better way to do this. Hopefully I get back to it.
     // Once I will send and API request to the backend. I am not yet sure if these get sent as plain text over http
     // If that is the case, I will need to research what best practices are for sending passwords for API requests.
-    const handleRegister = (e) => {
-        const userInfo = {username, email, password, repeatPassword}
-        if (password !== repeatPassword) {
-            throw new Error("Passwords do not match");
-        }
-        else{
-            fetch("http://localhost:8080/register/save", 
-            {
-                method:"POST",
-                headers:{"Content-Type":"application/json"},
-                body:JSON.stringify(userInfo)
-            }).then(()=> {
-                console.log("%s has been registered",username)
-            })
-        }
-    }
+    // const handleRegister = (e) => {
+    //     const userInfo = {username, email, password, repeatPassword}
+    //     if (password !== repeatPassword) {
+    //         throw new Error("Passwords do not match");
+    //     }
+    //     else{
+    //         fetch("http://localhost:8080/register/save", 
+    //         {
+    //             method:"POST",
+    //             headers:{"Content-Type":"application/json"},
+    //             body:JSON.stringify(userInfo)
+    //         }).then(()=> {
+    //             console.log("%s has been registered",username)
+    //         })
+    //     }
+    // }
 
     return (
         <Container>
