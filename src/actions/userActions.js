@@ -15,14 +15,14 @@ const login = ({email, password}) => async(dispatch) => {
     }
 }
 
-const register = ({name, email, password, repassword}) => async(dispatch) => {
-    dispatch({ type: USER_SIGNUP_REQUEST, payload: { name, email, password, repassword } });
+const register = ({userName, email, password, repassword}) => async(dispatch) => {
+    dispatch({ type: USER_REGISTER_REQUEST, payload: { userName, email, password, repassword } });
   try {
-    const { data } = await Axios.post("http://localhost:8080/register", { name, email, password, repassword });
-    dispatch({ type: USER_SIGNUP_SUCCESS, payload: data });
+    const { data } = await Axios.post("http://localhost:8080/register", { userName, email, password, repassword });
+    dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
     Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
-    dispatch({ type: USER_SIGNUP_FAIL, payload: error.message });
+    dispatch({ type: USER_REGISTER_FAIL, payload: error.message });
   }
 }
 

@@ -1,12 +1,11 @@
 import Box from '@mui/material/Box';
 import { Button, Container, Paper, TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
-import Link from 'react-router-dom';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector, useDispatch, Provider} from 'react-redux';
 import { register } from '../actions/userActions';
 
 
-export default function Register() {
+export default function Register(props) {
     const paperStyle={padding:'50px 20px',  width:600, margin:"20px"};
     // We initialize the username variable to be managed by the setUserName function within this component
     const [username, setUserName] = useState('');
@@ -16,6 +15,23 @@ export default function Register() {
     const userRegister = useSelector(state => state.userRegister);
     const {loading, userInfo, error} = userRegister;
     const dispatch = useDispatch();
+
+    const redirect = props.location.search ? props.label.search.split("=")[1] : '/';
+    
+    useEffect(() => {
+        if (userInfo) {
+            props.history.push(redirect);
+        }
+        return () => {
+
+        };
+    }, [userInfo]);
+    // userInfo is the 2nd parameter of the hook. Whenever it changes, the hook is ran again
+
+    const registerHandler = (e) => {
+        e.preventDefault();
+        dispatch(register(username, email, password, repeatPassword));
+    }
 
     // For now I will check the password similarity in the handle register function.
     // There's likely a better way to do this. Hopefully I get back to it.
@@ -39,6 +55,7 @@ export default function Register() {
     // }
 
     return (
+        <Provider>
         <Container>
             <Paper elevation={3} style={paperStyle}>
                 <Box
@@ -51,9 +68,10 @@ export default function Register() {
                     <TextField id="outlined-basic" type="email" label="email" variant="outlined" fullWidth value={email} onChange={(e) => setEmail(e.target.value)}/>
                     <TextField id="outlined-basic" type="password" label="password" variant='outlined' fullWidth value={password} onChange={(e) => setPassword(e.target.value)}/>
                     <TextField id="outlined-basic" type="password" label="repeatPassword" variant='outlined' fullWidth value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)}/>
-                    <Button variant='contained' onClick={handleRegister}>Register</Button>
+                    <Button variant='contained' onClick={registerHandler}>Register</Button>
                 </Box>
             </Paper>
         </Container>
+        </Provider>
     );
 }
